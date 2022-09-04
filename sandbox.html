@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			body {
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: beige;
+			}
+			.cards {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				min-height: 400px;
+				width: 400px;
+				height: 500px;
+			}
+			.card {
+				position: relative;
+				/* background: linear-gradient(90deg, white 50%, rgb(102, 138, 98) 40%); */
+				background: -webkit-linear-gradient(90deg, white 50%, rgb(102, 138, 98) 40%);
+				flex: 1;
+				width: 100%;
+				bottom: 0;
+				text-align: center;
+				height: 500px;
+				border-radius: 24px;
+			}
+			.left-bg::before {
+				content: '';
+				left: 0;
+				top: 0;
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				background: white;
+				border-top-left-radius: 60%;
+			}
+			.left-bg {
+				content: '';
+				left: 0;
+				top: 50%;
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				background: rgb(102, 138, 98);
+			}
+			.right-bg::before {
+				content: '';
+				right: 0;
+				top: 0px;
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				background: rgb(102, 138, 98);
+				border-bottom-right-radius: 60%;
+                z-index: 0;
+			}
+			.right-bg {
+				content: '';
+				right: 0;
+				top: calc(50% - 100px);
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				background: white;
+			}
+
+            .text {
+                z-index: 999;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="cards">
+			<div class="card">
+				<div class="left-bg"></div>
+				<div class="right-bg"></div>
+				<h3>Innehåll</h3>
+				<p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint nisi praesentium nostrum eos aspernatur, consectetur odio exercitationem, a dolore sed corrupti quo repellendus. Nam harum architecto, eius perspiciatis voluptatum, deleniti explicabo repudiandae exercitationem assumenda accusantium repellat non quisquam! Nemo illum ut provident, magnam perspiciatis natus! Officiis cupiditate rerum, omnis minima excepturi, assumenda perferendis impedit aliquam repudiandae inventore delectus! Architecto iusto eaque, odio voluptatum aperiam voluptas rerum, quae eius repellendus dolore sint voluptates rem quibusdam temporibus eveniet, corrupti perferendis quasi esse laboriosam laborum. Odio, alias adipisci? Enim mollitia dolores aliquid neque dolorum accusamus error quibusdam nihil obcaecati. Blanditiis debitis, magni impedit reprehenderit vero dolores aut aspernatur repudiandae minima sapiente totam quo quidem? Aliquid esse, laborum neque recusandae suscipit ea officia asperiores nemo ipsa explicabo ipsam reprehenderit quis, soluta, beatae ut nobis eum repellat. Deserunt, at sapiente sunt cumque, cum quaerat laborum sed unde aut, quasi non neque aspernatur. Corporis, modi quisquam?</p>
+			</div>
+		</div>
+	</body>
+</html>

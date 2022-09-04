@@ -10,33 +10,26 @@
 				<div class="header-navbar__sort">
 					<button><font-awesome-icon icon="fa-solid fa-arrow-down-a-z" /></button>
 				</div>
-				<div class="header-navbar__toggle"><button><font-awesome-icon icon="fa-solid fa-bars" /></button></div>
+				<div class="header-navbar__toggle">
+					<button><font-awesome-icon icon="fa-solid fa-bars" /></button>
+				</div>
 			</div>
 		</header>
 		<div class="card-wrapper">
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
-			</div>
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
-			</div>
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
-			</div>
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
-			</div>
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
-			</div>
-			<div class="card-item">
-				<div>John Doe</div>
-				<div>Country</div>
+			<div class="card-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
+				<div class="card-item__name">{{ name.first }} {{ name.last }}</div>
+				<div class="card-item__img">
+					<img :src="picture.medium" alt="User img" />
+				</div>
+				<div class="card-item__country">{{ location.country }}</div>
+				<div class="card-item__contact">
+					<a :href="email">
+						<font-awesome-icon icon="envelope" />
+					</a>
+					<a :href="cell">
+						<font-awesome-icon icon="phone" />
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -61,7 +54,13 @@
 </script>
 
 <style lang="scss">
-	@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Lato:wght@400;700&family=Work+Sans:wght@400;700&display=swap');
+
+	$ff-primary: 'Work Sans', sans-serif;
+	$ff-secondary: 'Karla', sans-serif;
+	$ff-tertiary: 'Lato', sans-serif;
+
+	$bg-clr: #ebe9e4;
 
 	* {
 		margin: 0;
@@ -69,26 +68,21 @@
 		box-sizing: border-box;
 	}
 
-	.wrapper {
-		max-width: 900px;
-		margin: 0 auto;
-		padding: 1rem;
+	body {
+		background: $bg-clr;
 	}
 
-	.card-wrapper {
-		border: 3px solid tomato;
-		display: grid;
+	.wrapper {
+		max-width: 750px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
 
-		grid-auto-columns: 1fr;
-		grid-gap: 10px;
-		grid-template-areas:
-			'one two'
-			'three four'
-			'five six';
+	.header-title {
+		font-family: $ff-tertiary;
 	}
 
 	.header-navbar {
-		border: 2px solid salmon;
 		display: grid;
 
 		grid-template-areas:
@@ -99,6 +93,7 @@
 	.header-navbar__search {
 		grid-area: search;
 	}
+
 	.header-navbar__sort {
 		grid-area: sort;
 	}
@@ -110,6 +105,65 @@
 
 	.header-navbar__search input {
 		width: 100%;
+	}
+
+	.card-wrapper {
+		display: grid;
+
+		grid-auto-columns: 1fr;
+		grid-gap: 1.5rem ;
+		grid-template-areas:
+			'one two'
+			'three four'
+			'five six';
+
+		& .card-item {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 1.5rem 1rem 1rem 1rem;
+			border-radius: 0.75rem;
+			background: white;
+
+			&__name {
+				font-family: $ff-secondary;
+				font-size: 0.875rem;
+				font-weight: 700;
+                line-height: 1rem;
+				color: #292929;
+				text-align: center;
+				padding-bottom: 1.5rem;
+			}
+
+			&__img > img {
+				border-radius: 50%;
+                max-width: 100%;
+			}
+
+			&__country {
+				font-family: $ff-tertiary;
+				font-size: 0.75rem;
+				line-height: 0.875rem;
+				text-align: center;
+				color: rgba(41, 41, 41, 0.6);
+				margin: 0.5rem 0 0.675rem 0;
+			}
+
+			&__contact {
+				font-size: 0.875rem;
+
+				a:link {
+					color: rgba(0, 0, 0, 0.8);
+					background-color: transparent;
+					text-decoration: none;
+				}
+
+				a:first-child {
+					margin-right: 0.375rem;
+				}
+			}
+		}
 	}
 
 	.card-item:nth-child(1) {
@@ -136,25 +190,14 @@
 		grid-area: six;
 	}
 
-	.card-item {
-		background: firebrick;
-	}
-
-	.card-item:nth-child(odd) {
-		background-color: thistle;
-	}
-
 	@media screen and (min-width: 40em) {
 		.card-wrapper {
-			background-color: yellowgreen;
-
 			grid-template-areas:
 				'one two three'
 				'four five six';
 		}
 
 		.header-navbar {
-			border: 4px solid green;
 			display: flex;
 			flex-direction: row;
 		}
