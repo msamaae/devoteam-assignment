@@ -8,13 +8,16 @@
 					<input type="text" />
 				</div>
 				<div class="header-navbar__sort">
-					<button><font-awesome-icon icon="fa-solid fa-arrow-down-a-z" /></button>
+					<font-awesome-icon :icon="sortIcon" @click="sortByName" />
 				</div>
 				<div class="header-navbar__toggle">
-					<button><font-awesome-icon icon="fa-solid fa-bars" /></button>
+					<font-awesome-icon icon="fa-solid fa-bars" />
 				</div>
 			</div>
 		</header>
+
+		<div v-if="errorText">{{ errorText }}</div>
+
 		<div class="card-wrapper">
 			<div class="card-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
 				<div class="card-item__name">{{ name.first }} {{ name.last }}</div>
@@ -43,12 +46,36 @@
 		data() {
 			return {
 				users: [],
+				errorText: '',
+				sortDirection: 'desc',
+                toggleView: 'grid',
 			};
 		},
 		async mounted() {
-			const { data } = await axios.get('https://randomuser.me/api/?results=6');
+			try {
+				const { data } = await axios.get('https://randomuser.me/api/?results=6');
 
-			this.users = data.results;
+				this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
+			} catch (error) {
+				this.errorText = 'Could not load users. Try reloading.';
+				throw error;
+			}
+		},
+		computed: {
+			sortIcon() {
+				return this.sortDirection === 'desc' ? ['fas', 'arrow-down-a-z'] : ['fas', 'arrow-up-a-z'];
+			},
+		},
+		methods: {
+			sortByName() {
+				this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+
+				if (this.sortDirection === 'desc') {
+					this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
+				} else {
+					this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
+				}
+			},
 		},
 	};
 </script>
@@ -79,39 +106,67 @@
 	}
 
 	.header-title {
-		font-family: $ff-tertiary;
+		font-family: $ff-primary;
+		font-weight: 400;
+		font-size: 1.5rem;
+		line-height: 1.875rem;
 	}
 
 	.header-navbar {
 		display: grid;
-
 		grid-template-areas:
 			'search search'
 			'sort toggle';
-	}
 
-	.header-navbar__search {
-		grid-area: search;
-	}
+		&__search {
+			grid-area: search;
+			margin: 2rem 0.225rem 1rem 0.225rem;
 
-	.header-navbar__sort {
-		grid-area: sort;
-	}
+			position: relative;
 
-	.header-navbar__toggle {
-		grid-area: toggle;
-		justify-self: flex-end;
-	}
+			& svg {
+				font-size: 0.875rem;
+				left: 0.5rem;
+				top: 0.275rem;
+				position: absolute;
+			}
 
-	.header-navbar__search input {
-		width: 100%;
+			& input {
+				border-radius: 4rem;
+				border: none;
+				height: 1.5rem;
+				padding-left: 1.675rem;
+				width: 100%;
+			}
+		}
+
+		&__sort {
+			grid-area: sort;
+			font-size: 1.5rem;
+			padding-left: 0.225rem;
+
+			& > svg {
+				cursor: pointer;
+			}
+		}
+
+		&__toggle {
+			grid-area: toggle;
+			justify-self: flex-end;
+			font-size: 1.5rem;
+			padding-right: 0.225rem;
+
+			& > svg {
+				cursor: pointer;
+			}
+		}
 	}
 
 	.card-wrapper {
 		display: grid;
-
+		margin-top: 1rem;
 		grid-auto-columns: 1fr;
-		grid-gap: 1.5rem ;
+		grid-gap: 1.5rem;
 		grid-template-areas:
 			'one two'
 			'three four'
@@ -130,15 +185,15 @@
 				font-family: $ff-secondary;
 				font-size: 0.875rem;
 				font-weight: 700;
-                line-height: 1rem;
+				line-height: 1rem;
 				color: #292929;
 				text-align: center;
-				padding-bottom: 1.5rem;
+				padding: 1.275rem 0 1.5rem 0;
 			}
 
 			&__img > img {
 				border-radius: 50%;
-                max-width: 100%;
+				max-width: 100%;
 			}
 
 			&__country {
@@ -151,7 +206,11 @@
 			}
 
 			&__contact {
-				font-size: 0.875rem;
+				font-size: 0.675rem;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
 
 				a:link {
 					color: rgba(0, 0, 0, 0.8);
@@ -160,59 +219,86 @@
 				}
 
 				a:first-child {
+					font-size: 0.775rem;
 					margin-right: 0.375rem;
 				}
+			}
+
+			&:nth-child(1) {
+				grid-area: one;
+			}
+
+			&:nth-child(2) {
+				grid-area: two;
+			}
+
+			&:nth-child(3) {
+				grid-area: three;
+			}
+
+			&:nth-child(4) {
+				grid-area: four;
+			}
+
+			&:nth-child(5) {
+				grid-area: five;
+			}
+
+			&:nth-child(6) {
+				grid-area: six;
 			}
 		}
 	}
 
-	.card-item:nth-child(1) {
-		grid-area: one;
-	}
-
-	.card-item:nth-child(2) {
-		grid-area: two;
-	}
-
-	.card-item:nth-child(3) {
-		grid-area: three;
-	}
-
-	.card-item:nth-child(4) {
-		grid-area: four;
-	}
-
-	.card-item:nth-child(5) {
-		grid-area: five;
-	}
-
-	.card-item:nth-child(6) {
-		grid-area: six;
-	}
-
 	@media screen and (min-width: 40em) {
+		.wrapper {
+			padding: 2rem 5rem;
+		}
+
+		.header-title {
+			font-size: 3rem;
+			line-height: 3.5rem;
+			margin: 0.5rem 0 2rem -4.5rem;
+		}
+
 		.card-wrapper {
+			grid-gap: 2.5rem;
 			grid-template-areas:
 				'one two three'
 				'four five six';
+
+			& .card-item {
+				padding: 2rem 1.5rem 1.5rem 1.5rem;
+
+				&__contact {
+					font-size: 1.1rem;
+					padding-top: 1rem;
+
+					a:first-child {
+						font-size: 1.375rem;
+						margin-right: 0.625rem;
+					}
+				}
+			}
 		}
 
 		.header-navbar {
 			display: flex;
 			flex-direction: row;
-		}
 
-		.header-navbar__search {
-			flex-grow: 1;
-		}
+			&__search {
+				flex-grow: 1;
+				margin: 0 0.875rem;
+			}
 
-		.header-navbar__search input {
-			width: 300px;
-		}
+			&__search input {
+				width: 300px;
+			}
 
-		.header-navbar__sort {
-			flex-shrink: 1;
-			order: -1;
+			&__sort {
+				flex-shrink: 1;
+				order: -1;
+			}
 		}
 	}
 </style>
