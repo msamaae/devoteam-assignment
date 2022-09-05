@@ -1,6 +1,8 @@
 <template>
 	<div id="app" class="wrapper">
-		<header class="header-wrapper">
+		<Header />
+
+		<!-- <header class="header-wrapper">
 			<h1 class="header-title">Meet the team</h1>
 			<div class="header-navbar">
 				<div class="header-navbar__search">
@@ -14,11 +16,11 @@
 					<font-awesome-icon icon="fa-solid fa-bars" />
 				</div>
 			</div>
-		</header>
+		</header> -->
 
 		<div v-if="errorText">{{ errorText }}</div>
 
-		<div class="card-wrapper">
+		<div class="grid-wrapper">
 			<div class="card-item" v-for="({ name, picture, location, email, cell }, key) in usersFiltered" :key="key">
 				<div class="card-item__name">{{ name.first }} {{ name.last }}</div>
 				<div class="card-item__img">
@@ -40,9 +42,15 @@
 
 <script>
 	import axios from 'axios';
+	import { eventBus } from '@/main';
+
+	import Header from '@/components/Header.vue';
 
 	export default {
 		name: 'App',
+		components: {
+			Header,
+		},
 		data() {
 			return {
 				users: [],
@@ -51,6 +59,14 @@
 				sortDirection: 'desc',
 				toggleView: 'grid',
 			};
+		},
+		created() {
+			eventBus.$on('sort-direction', ({ sortDirection }) => { this.sortDirection = sortDirection });
+			eventBus.$on('search-text', ({ searchText }) => { this.searchText = searchText });
+		},
+		beforeDestroy() {
+			eventBus.$off('sort-direction');
+			eventBus.$off('search-text');
 		},
 		async mounted() {
 			try {
@@ -62,24 +78,32 @@
 				throw error;
 			}
 		},
-		computed: {
-			sortIcon() {
-				return this.sortDirection === 'desc' ? ['fas', 'arrow-down-a-z'] : ['fas', 'arrow-up-a-z'];
-			},
-            usersFiltered() {
-                return this.users.filter(user => user.name.first.toLowerCase().includes(this.searchText.toLowerCase()));
-            }
-		},
-		methods: {
-			sortByName() {
-				this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
-
+		watch: {
+			sortDirection() {
 				if (this.sortDirection === 'desc') {
 					this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
 				} else {
 					this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
 				}
 			},
+		},
+		computed: {
+			sortIcon() {
+				return this.sortDirection === 'desc' ? ['fas', 'arrow-down-a-z'] : ['fas', 'arrow-up-a-z'];
+			},
+			usersFiltered() {
+				return this.users.filter(user => user.name.first.toLowerCase().includes(this.searchText.toLowerCase()));
+			},
+		},
+		methods: {
+			// sortByName() {
+			// this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
+			// if (this.sortDirection === 'desc') {
+			// 	this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
+			// } else {
+			// 	this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
+			// }
+			// },
 		},
 	};
 </script>
@@ -109,7 +133,7 @@
 		padding: 2rem;
 	}
 
-	.header-title {
+	/* .header-title {
 		font-family: $ff-primary;
 		font-weight: 400;
 		font-size: 1.5rem;
@@ -164,9 +188,9 @@
 				cursor: pointer;
 			}
 		}
-	}
+	} */
 
-	.card-wrapper {
+	.grid-wrapper {
 		display: grid;
 		margin-top: 1rem;
 		grid-auto-columns: 1fr;
@@ -265,7 +289,7 @@
 			margin: 0.5rem 0 2rem -4.5rem;
 		}
 
-		.card-wrapper {
+		.grid-wrapper {
 			grid-gap: 2.5rem;
 			grid-template-areas:
 				'one two three'

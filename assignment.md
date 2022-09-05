@@ -12,7 +12,7 @@ https://www.figma.com/file/YFz4WAqi9ebuvCPESpIP2q/Frontend-Assignment
 -   [] Recreate the Figma design.
 -   [] Enable switch between grid and list view.
 -   [x] Add sorting by name (ascending and descending) functionality.
--   [] Add search by name functionality.
+-   [x] Add search by name functionality.
 -   [x] Handle empty or error states.
 -   [x] Responsive design.
 -   [x] No UI frameworks used (ex. Bootstrap, Material, Tailwind).
