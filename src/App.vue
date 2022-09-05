@@ -5,7 +5,7 @@
 			<div class="header-navbar">
 				<div class="header-navbar__search">
 					<font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-					<input type="text" />
+					<input type="text" v-model="searchText" />
 				</div>
 				<div class="header-navbar__sort">
 					<font-awesome-icon :icon="sortIcon" @click="sortByName" />
@@ -19,7 +19,7 @@
 		<div v-if="errorText">{{ errorText }}</div>
 
 		<div class="card-wrapper">
-			<div class="card-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
+			<div class="card-item" v-for="({ name, picture, location, email, cell }, key) in usersFiltered" :key="key">
 				<div class="card-item__name">{{ name.first }} {{ name.last }}</div>
 				<div class="card-item__img">
 					<img :src="picture.medium" alt="User img" />
@@ -47,8 +47,9 @@
 			return {
 				users: [],
 				errorText: '',
+				searchText: '',
 				sortDirection: 'desc',
-                toggleView: 'grid',
+				toggleView: 'grid',
 			};
 		},
 		async mounted() {
@@ -65,6 +66,9 @@
 			sortIcon() {
 				return this.sortDirection === 'desc' ? ['fas', 'arrow-down-a-z'] : ['fas', 'arrow-up-a-z'];
 			},
+            usersFiltered() {
+                return this.users.filter(user => user.name.first.toLowerCase().includes(this.searchText.toLowerCase()));
+            }
 		},
 		methods: {
 			sortByName() {
