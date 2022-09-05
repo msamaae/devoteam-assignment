@@ -10,7 +10,7 @@
 				<font-awesome-icon :icon="sortIcon" @click="sortClicked" />
 			</div>
 			<div class="header-navbar__toggle">
-				<font-awesome-icon icon="fa-solid fa-bars" />
+				<font-awesome-icon :icon="toggleIcon" @click="toggle" />
 			</div>
 		</div>
 	</header>
@@ -25,6 +25,7 @@
 			return {
 				searchText: '',
 				sortDirection: 'desc',
+				toggleView: 'grid',
 			};
 		},
 		watch: {
@@ -36,12 +37,20 @@
 			sortIcon() {
 				return this.sortDirection === 'desc' ? ['fas', 'arrow-down-a-z'] : ['fas', 'arrow-up-a-z'];
 			},
+			toggleIcon() {
+				return this.toggleView === 'grid' ? 'fa-solid fa-border-all' : 'fa-solid fa-bars';
+			},
 		},
 		methods: {
 			sortClicked() {
 				this.sortDirection = this.sortDirection === 'desc' ? 'asc' : 'desc';
 
 				eventBus.$emit('sort-direction', { sortDirection: this.sortDirection });
+			},
+			toggle() {
+				this.toggleView = this.toggleView === 'grid' ? 'list' : 'grid';
+
+                eventBus.$emit('toggle-view', { toggleView: this.toggleView });
 			},
 		},
 	};
