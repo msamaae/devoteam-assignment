@@ -1,18 +1,23 @@
 <template>
 	<div class="grid-wrapper">
 		<div class="grid-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
-			<div class="grid-item__name">{{ name.first }} {{ name.last }}</div>
-			<div class="grid-item__img">
-				<img :src="picture.medium" alt="User img" />
+			<div class="rect"></div>
+			<div class="section top">
+				<div class="grid-item__name">{{ name.first }} {{ name.last }}</div>
+				<div class="grid-item__img">
+					<img :src="picture.medium" alt="User img" />
+				</div>
 			</div>
-			<div class="grid-item__country">{{ location.country }}</div>
-			<div class="grid-item__contact">
-				<a :href="email">
-					<font-awesome-icon icon="envelope" />
-				</a>
-				<a :href="cell">
-					<font-awesome-icon icon="phone" />
-				</a>
+			<div class="section bottom">
+				<div class="grid-item__country">{{ location.country }}</div>
+				<div class="grid-item__contact">
+					<a :href="email">
+						<font-awesome-icon icon="envelope" />
+					</a>
+					<a :href="cell">
+						<font-awesome-icon icon="phone" />
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -42,13 +47,40 @@
 			'five six';
 
 		& .grid-item {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			padding: 1.5rem 1rem 1rem 1rem;
-			border-radius: 0.75rem;
+			position: relative;
+			min-height: 220px;
 			background: white;
+			overflow: hidden;
+			border-radius: 0.75rem;
+
+			& .rect {
+				background-color: #a7b8a8;
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				right: 0;
+				top: 50%;
+			}
+
+			& .section {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				align-items: center;
+				min-width: 100%;
+				min-height: 50%;
+
+				&.top {
+					background: #a7b8a8;
+					border-bottom-left-radius: 2.5rem;
+				}
+
+				&.bottom {
+					border-top-right-radius: 2.5rem;
+					background: white;
+				}
+			}
 
 			&__name {
 				font-family: 'Karla', sans-serif;
@@ -57,12 +89,19 @@
 				line-height: 1rem;
 				color: #292929;
 				text-align: center;
-				padding: 1.275rem 0 1.5rem 0;
+				padding-top: 1.575rem;
+                word-wrap: break-word;
 			}
 
-			&__img > img {
-				border-radius: 50%;
-				max-width: 100%;
+			&__img {
+				position: absolute;
+				margin-top: 4.5rem;
+				z-index: 1;
+
+				& > img {
+					border-radius: 50%;
+					max-width: 100%;
+				}
 			}
 
 			&__country {
@@ -71,15 +110,12 @@
 				line-height: 0.875rem;
 				text-align: center;
 				color: rgba(41, 41, 41, 0.6);
-				margin: 0.5rem 0 0.675rem 0;
+				margin-top: 3rem;
 			}
 
 			&__contact {
 				font-size: 0.675rem;
-
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				margin-bottom: 1.25rem;
 
 				a:link {
 					color: rgba(0, 0, 0, 0.8);
@@ -99,18 +135,50 @@
 
 			&:nth-child(2) {
 				grid-area: two;
+
+				& .rect {
+					background-color: #e1d3c7;
+				}
+
+				& .top {
+					background: #e1d3c7;
+				}
 			}
 
 			&:nth-child(3) {
 				grid-area: three;
+
+				& .rect {
+					background-color: #e8cdad;
+				}
+
+				& .top {
+					background: #e8cdad;
+				}
 			}
 
 			&:nth-child(4) {
 				grid-area: four;
+
+				& .rect {
+					background-color: #E1D3C7;
+				}
+
+				& .top {
+					background: #E1D3C7;
+				}
 			}
 
 			&:nth-child(5) {
 				grid-area: five;
+
+				& .rect {
+					background-color: #e8cdad;
+				}
+
+				& .top {
+					background: #e8cdad;
+				}
 			}
 
 			&:nth-child(6) {

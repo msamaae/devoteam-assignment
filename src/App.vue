@@ -4,8 +4,8 @@
 
 		<div v-if="errorText">{{ errorText }}</div>
 
-        <Grid :users="usersFiltered" v-if="toggleView === 'grid'"/>
-        <List :users="usersFiltered" v-else />
+		<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
+		<List :users="usersFiltered" v-else />
 	</div>
 </template>
 
@@ -20,7 +20,7 @@
 	export default {
 		name: 'App',
 		components: {
-            Header,
+			Header,
 			Grid,
 			List,
 		},
@@ -34,9 +34,15 @@
 			};
 		},
 		created() {
-			eventBus.$on('sort-direction', ({ sortDirection }) => { this.sortDirection = sortDirection });
-			eventBus.$on('search-text', ({ searchText }) => { this.searchText = searchText });
-			eventBus.$on('toggle-view', ({ toggleView }) => { this.toggleView = toggleView });
+			eventBus.$on('sort-direction', ({ sortDirection }) => {
+				this.sortDirection = sortDirection;
+			});
+			eventBus.$on('search-text', ({ searchText }) => {
+				this.searchText = searchText;
+			});
+			eventBus.$on('toggle-view', ({ toggleView }) => {
+				this.toggleView = toggleView;
+			});
 		},
 		beforeDestroy() {
 			eventBus.$off('sort-direction');
@@ -90,7 +96,7 @@
 	}
 
 	.wrapper {
-		max-width: 750px;
+		max-width: 850px;
 		margin: 0 auto;
 		padding: 2rem;
 	}
@@ -113,9 +119,25 @@
 				'four five six';
 
 			& .grid-item {
-				padding: 2rem 1.5rem 1.5rem 1.5rem;
+				min-height: 340px;
+
+				&__name {
+					font-size: 1.125rem;
+					padding-top: 3.5rem;
+				}
+
+				&__img {
+					margin-top: 8rem;
+		
+				}
+
+				&__country {
+					font-size: 0.875rem;
+                    margin-top: 3.5rem;
+				}
 
 				&__contact {
+					margin-bottom: 1.5rem;
 					font-size: 1.1rem;
 					padding-top: 1rem;
 

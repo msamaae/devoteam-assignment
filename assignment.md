@@ -10,7 +10,7 @@ https://www.figma.com/file/YFz4WAqi9ebuvCPESpIP2q/Frontend-Assignment
 ### Feature and functional requirements:
 
 -   [] Recreate the Figma design.
--   [] Enable switch between grid and list view.
+-   [x] Enable switch between grid and list view.
 -   [x] Add sorting by name (ascending and descending) functionality.
 -   [x] Add search by name functionality.
 -   [x] Handle empty or error states.
