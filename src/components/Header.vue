@@ -1,10 +1,10 @@
 <template>
 	<header class="header-wrapper">
-		<h1 class="header-title">Meet the team</h1>
+		<h1 class="header-title">{{ title }}</h1>
 		<div class="header-navbar">
 			<div class="header-navbar__search">
 				<font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-				<input type="text" v-model="searchText" />
+				<input type="text" v-model="searchText" placeholder="Search users..." />
 			</div>
 			<div class="header-navbar__sort">
 				<font-awesome-icon :icon="sortIcon" @click="sortClicked" />
@@ -21,6 +21,12 @@
 
 	export default {
 		name: 'Header',
+		props: {
+			title: {
+				type: String,
+				reqired: true,
+			},
+		},
 		data() {
 			return {
 				searchText: '',
@@ -50,7 +56,7 @@
 			toggle() {
 				this.toggleView = this.toggleView === 'grid' ? 'list' : 'grid';
 
-                eventBus.$emit('toggle-view', { toggleView: this.toggleView });
+				eventBus.$emit('toggle-view', { toggleView: this.toggleView });
 			},
 		},
 	};

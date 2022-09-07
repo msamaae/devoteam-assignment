@@ -19,6 +19,7 @@ https://www.figma.com/file/YFz4WAqi9ebuvCPESpIP2q/Frontend-Assignment
 -   [] Unit testing for some major functionality (coverage within reason).
 
 ### Bonus Points
+
 -   [] Use lazy loading of the cards to load a few cards at a time.
 -   [] Maximise accessibility through HTML and WAI-ARIA to the best of your ability.
 
@@ -43,5 +44,5 @@ https://www.figma.com/file/YFz4WAqi9ebuvCPESpIP2q/Frontend-Assignment
 -   How has the application been tested?
 -   Code structure, readability, naming and formatting.
 -   Does the page style correspond to the provided design.
-    If there are things that are unclear do not hesitate to contact us and we will get back to you as soon as
-    possible. Good luck!
+
+#### If there are things that are unclear do not hesitate to contact us and we will get back to you as soon as possible. Good luck!

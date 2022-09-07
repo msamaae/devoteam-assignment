@@ -1,11 +1,15 @@
 <template>
 	<div id="app" class="wrapper">
-		<Header />
+		<Header title="Meet the Team" />
+        
+		<div v-if="errorText" class="errorText">
+			<h2>{{ errorText }}</h2>
+		</div>
 
-		<div v-if="errorText">{{ errorText }}</div>
-
-		<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
-		<List :users="usersFiltered" v-else />
+		<div v-else>
+			<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
+			<List :users="usersFiltered" v-else />
+		</div>
 	</div>
 </template>
 
@@ -55,7 +59,7 @@
 
 				this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
 			} catch (error) {
-				this.errorText = 'Could not load users. Try reloading.';
+				this.errorText = 'Could not load users. Try reloading again.';
 				throw error;
 			}
 		},
@@ -99,6 +103,12 @@
 		max-width: 850px;
 		margin: 0 auto;
 		padding: 2rem;
+
+		& .errorText {
+			font-family: $ff-primary;
+            text-align: center;
+            margin-top: 8rem;
+		}
 	}
 
 	@media screen and (min-width: 40em) {
@@ -128,12 +138,11 @@
 
 				&__img {
 					margin-top: 8rem;
-		
 				}
 
 				&__country {
 					font-size: 0.875rem;
-                    margin-top: 3.5rem;
+					margin-top: 3.5rem;
 				}
 
 				&__contact {
