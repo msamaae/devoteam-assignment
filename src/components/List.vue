@@ -1,10 +1,10 @@
 <template>
 	<div class="list-wrapper">
-		<div class="list-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
+		<div class="list-item" v-for="({ name, picture, location, email, phone }, key) in users" :key="key">
 			<div class="list-item__curve"></div>
 			<div class="list-item__content">
 				<div class="list-item__img">
-					<img :src="picture.medium" alt="User img" class="" />
+					<img :src="picture.medium" alt="User image" />
 				</div>
 				<div class="list-item__container">
 					<div class="list-item__name">{{ name.first }} {{ name.last }}</div>
@@ -13,10 +13,10 @@
 			</div>
 			<div class="list-item__contact">
 				<div>
-					<a :href="email">
+					<a :href="email" aria-label="email" target="_blank" rel="noopener">
 						<font-awesome-icon icon="envelope" />
 					</a>
-					<a :href="cell">
+					<a :href="phone" aria-label="phone" target="_blank" rel="noopener">
 						<font-awesome-icon icon="phone" />
 					</a>
 				</div>

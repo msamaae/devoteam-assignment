@@ -1,20 +1,20 @@
 <template>
 	<div class="grid-wrapper">
-		<div class="grid-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
+		<div class="grid-item" v-for="({ name, picture, location, email, phone }, key) in users" :key="key">
 			<div class="rect"></div>
 			<div class="section top">
 				<div class="grid-item__name">{{ name.first }} {{ name.last }}</div>
 				<div class="grid-item__img">
-					<img :src="picture.medium" alt="User img" />
+					<img :src="picture.medium" alt="User image" />
 				</div>
 			</div>
 			<div class="section bottom">
 				<div class="grid-item__country">{{ location.country }}</div>
 				<div class="grid-item__contact">
-					<a :href="email">
+					<a :href="'mailto:' + email" aria-label="email" target="_blank" rel="noopener">
 						<font-awesome-icon icon="envelope" />
 					</a>
-					<a :href="cell">
+					<a :href="'tel:+' + phone" aria-label="phone" target="_blank" rel="noopener">
 						<font-awesome-icon icon="phone" />
 					</a>
 				</div>

@@ -3,24 +3,30 @@
 		<h1 class="header-title">{{ title }}</h1>
 		<div class="header-navbar">
 			<div class="header-navbar__search">
-				<font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+				<FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
 				<input type="text" v-model="searchText" placeholder="Search users..." />
 			</div>
 			<div class="header-navbar__sort">
-				<font-awesome-icon :icon="sortIcon" @click="sortClicked" />
+				<a href="#" aria-label="sort" @click.prevent="sortClicked">
+					<FontAwesomeIcon :icon="sortIcon" />
+				</a>
 			</div>
 			<div class="header-navbar__toggle">
-				<font-awesome-icon :icon="toggleIcon" @click="toggle" />
+				<a href="#" aria-label="toggle" @click.prevent="toggle">
+					<FontAwesomeIcon :icon="toggleIcon"  />
+				</a>
 			</div>
 		</div>
 	</header>
 </template>
 
 <script>
-	import { eventBus } from '@/main';
+	import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+	import { eventBus } from '@/eventBus';
 
 	export default {
 		name: 'Header',
+		components: { FontAwesomeIcon },
 		props: {
 			title: {
 				type: String,

@@ -2,9 +2,13 @@
 	<div id="app" class="wrapper">
 		<Header title="Meet the Team" />
 
-		<div v-if="errorText" class="errorText">
+		<div v-if="errorText" class="error-text">
 			<h2 v-html="errorText"></h2>
 		</div>
+
+        <div v-else-if="isLoading" class="error-text">
+            <h2>{{ isLoadingText }}</h2>
+        </div>
 
 		<div v-else>
 			<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
@@ -15,7 +19,7 @@
 
 <script>
 	import axios from 'axios';
-	import { eventBus } from '@/main';
+	import { eventBus } from '@/eventBus';
 
 	import Header from '@/components/Header.vue';
 	import Grid from '@/components/Grid.vue';
@@ -31,6 +35,8 @@
 		data() {
 			return {
 				users: [],
+                isLoading: false,
+                isLoadingText: 'Loading users...',
 				errorText: '',
 				searchText: '',
 				sortDirection: 'desc',
@@ -40,6 +46,7 @@
 		created() {
 			eventBus.$on('sort-direction', ({ sortDirection }) => {
 				this.sortDirection = sortDirection;
+                this.usersSorted;
 			});
 			eventBus.$on('search-text', ({ searchText }) => {
 				this.searchText = searchText;
@@ -55,26 +62,31 @@
 		},
 		async mounted() {
 			try {
+                this.isLoading = true;
+
 				const { data } = await axios.get('https://randomuser.me/api/?results=6');
 
 				this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
+
+
 			} catch (error) {
+                this.isLoading = false;
 				this.errorText = 'Could not load users. <br /> Try reloading again!';
 				throw error;
-			}
-		},
-		watch: {
-			sortDirection() {
-				if (this.sortDirection === 'desc') {
-					this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
-				} else {
-					this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
-				}
-			},
+			} finally {
+                this.isLoading = false;
+            }
 		},
 		computed: {
 			usersFiltered() {
 				return this.users.filter(user => user.name.first.toLowerCase().includes(this.searchText.toLowerCase()));
+			},
+			usersSorted() {
+				if (this.sortDirection === 'desc') {
+					return this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
+				} else {
+					return this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
+				}
 			},
 		},
 	};
@@ -97,6 +109,10 @@
 
 	body {
 		background: $bg-clr;
+        
+        a:link, :visited, :hover, :active {
+            color: #000;
+        }
 	}
 
 	.wrapper {
@@ -104,7 +120,7 @@
 		margin: 0 auto;
 		padding: 2rem;
 
-		& .errorText {
+		& .error-text {
 			font-family: $ff-primary;
 			text-align: center;
 			margin-top: 8rem;
@@ -140,9 +156,9 @@
 				order: -1;
 			}
 		}
-    
-        /* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 10%) */
-        /* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 55%); */
+
+		/* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 10%) */
+		/* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 55%); */
 
 		.grid-wrapper {
 			grid-gap: 2.5rem;
@@ -184,9 +200,9 @@
 			& .list-item {
 				padding: 0.5rem 2rem;
 
-                &__curve {
-                    left: 4.225rem;
-                }
+				&__curve {
+					left: 4.225rem;
+				}
 
 				&__content {
 					justify-content: center;
