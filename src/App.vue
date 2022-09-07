@@ -1,9 +1,9 @@
 <template>
 	<div id="app" class="wrapper">
 		<Header title="Meet the Team" />
-        
+
 		<div v-if="errorText" class="errorText">
-			<h2>{{ errorText }}</h2>
+			<h2 v-html="errorText"></h2>
 		</div>
 
 		<div v-else>
@@ -59,7 +59,7 @@
 
 				this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
 			} catch (error) {
-				this.errorText = 'Could not load users. Try reloading again.';
+				this.errorText = 'Could not load users. <br /> Try reloading again!';
 				throw error;
 			}
 		},
@@ -106,8 +106,8 @@
 
 		& .errorText {
 			font-family: $ff-primary;
-            text-align: center;
-            margin-top: 8rem;
+			text-align: center;
+			margin-top: 8rem;
 		}
 	}
 
@@ -121,6 +121,28 @@
 			line-height: 3.5rem;
 			margin: 0.5rem 0 2rem -4.5rem;
 		}
+
+		.header-navbar {
+			display: flex;
+			flex-direction: row;
+
+			&__search {
+				flex-grow: 1;
+				margin: 0 0.875rem;
+			}
+
+			&__search input {
+				width: 300px;
+			}
+
+			&__sort {
+				flex-shrink: 1;
+				order: -1;
+			}
+		}
+    
+        /* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 10%) */
+        /* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 55%); */
 
 		.grid-wrapper {
 			grid-gap: 2.5rem;
@@ -158,22 +180,34 @@
 			}
 		}
 
-		.header-navbar {
-			display: flex;
-			flex-direction: row;
+		.list-wrapper {
+			& .list-item {
+				padding: 0.5rem 2rem;
 
-			&__search {
-				flex-grow: 1;
-				margin: 0 0.875rem;
-			}
+                &__curve {
+                    left: 4.225rem;
+                }
 
-			&__search input {
-				width: 300px;
-			}
+				&__content {
+					justify-content: center;
+					align-items: center;
+				}
 
-			&__sort {
-				flex-shrink: 1;
-				order: -1;
+				&__img {
+					padding-right: 1.25rem;
+				}
+
+				&__name {
+					padding-top: 0;
+				}
+
+				&__country {
+					font-size: 0.875rem;
+				}
+
+				&__contact {
+					align-items: center;
+				}
 			}
 		}
 	}

@@ -1,12 +1,12 @@
 <template>
 	<div class="list-wrapper">
 		<div class="list-item" v-for="({ name, picture, location, email, cell }, key) in users" :key="key">
-			<div class="curve"></div>
+			<div class="list-item__curve"></div>
 			<div class="list-item__content">
 				<div class="list-item__img">
 					<img :src="picture.medium" alt="User img" class="" />
 				</div>
-				<div>
+				<div class="list-item__container">
 					<div class="list-item__name">{{ name.first }} {{ name.last }}</div>
 					<div class="list-item__country">{{ location.country }}</div>
 				</div>
@@ -46,27 +46,23 @@
 
 		& .list-item {
 			background-color: #a7b8a8;
-			/* background: radial-gradient(at bottom ,#629a92 36%,#02d2a0 67%, #fff 11%); */
-
 			display: flex;
-			/* justify-content: space-around; */
 			border-radius: 1.25rem;
 			padding: 0.5rem 1.25rem;
 			position: relative;
 			z-index: 0;
-			/* width: 100%; */
 			overflow: hidden;
+			box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 20%);
 
-			& .curve {
+
+			&__curve {
 				position: absolute;
 				left: 3.425rem;
 				top: 0;
-				bottom: 0;
 				width: 100%;
 				height: 100%;
-				border-radius: 3rem 1.25rem 1.25rem 0;
+				border-radius: 2.5rem 1.25rem 1.25rem 0;
 				background-color: #fff;
-				overflow: hidden;
 				z-index: -1;
 			}
 
@@ -78,6 +74,7 @@
 				padding: 0.25rem 1rem 0 0;
 
 				& > img {
+					box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 30%);
 					border-radius: 50%;
 					max-width: 100%;
 				}

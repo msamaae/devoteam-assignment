@@ -52,13 +52,14 @@
 			background: white;
 			overflow: hidden;
 			border-radius: 0.75rem;
+			box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 20%);
 
 			& .rect {
 				background-color: #a7b8a8;
 				position: absolute;
 				width: 50px;
 				height: 50px;
-				right: 0;
+				left: 0;
 				top: 50%;
 			}
 
@@ -73,11 +74,11 @@
 
 				&.top {
 					background: #a7b8a8;
-					border-bottom-left-radius: 2.5rem;
+					border-bottom-right-radius: 2.5rem;
 				}
 
 				&.bottom {
-					border-top-right-radius: 2.5rem;
+					border-top-left-radius: 2.5rem;
 					background: white;
 				}
 			}
@@ -90,7 +91,7 @@
 				color: #292929;
 				text-align: center;
 				padding-top: 1.575rem;
-                word-wrap: break-word;
+				word-wrap: break-word;
 			}
 
 			&__img {
@@ -99,6 +100,7 @@
 				z-index: 1;
 
 				& > img {
+					box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 30%);
 					border-radius: 50%;
 					max-width: 100%;
 				}
@@ -161,11 +163,11 @@
 				grid-area: four;
 
 				& .rect {
-					background-color: #E1D3C7;
+					background-color: #e1d3c7;
 				}
 
 				& .top {
-					background: #E1D3C7;
+					background: #e1d3c7;
 				}
 			}
 
