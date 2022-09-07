@@ -8,8 +8,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fas);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-export const eventBus = new Vue();
-
 Vue.config.productionTip = false;
 
 new Vue({

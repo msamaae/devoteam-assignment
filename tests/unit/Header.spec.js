@@ -13,7 +13,7 @@ describe('Header.vue', () => {
 		expect(wrapper.text()).toMatch(title);
 	});
 
-	it('emits the search text, sort direction and toggle view', async () => {
+	it('emits the search text, sort direction and toggle view events', async () => {
 		const wrapper = shallowMount(Header);
 		const searchText = 'John Doe';
 		const sortDirection = 'asc';
