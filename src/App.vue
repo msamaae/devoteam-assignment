@@ -6,11 +6,7 @@
 			<h2 v-html="errorText"></h2>
 		</div>
 
-        <div v-else-if="isLoading" class="error-text">
-            <h2>{{ isLoadingText }}</h2>
-        </div>
-
-		<div v-else>
+		<div>
 			<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
 			<List :users="usersFiltered" v-else />
 		</div>
@@ -20,7 +16,7 @@
 <script>
 	import axios from 'axios';
 	import { eventBus } from '@/eventBus';
-
+	import { mockUsers } from '../tests/mocks/mockUsers';
 	import Header from '@/components/Header.vue';
 	import Grid from '@/components/Grid.vue';
 	import List from '@/components/List.vue';
@@ -35,8 +31,6 @@
 		data() {
 			return {
 				users: [],
-                isLoading: false,
-                isLoadingText: 'Loading users...',
 				errorText: '',
 				searchText: '',
 				sortDirection: 'desc',
@@ -46,7 +40,7 @@
 		created() {
 			eventBus.$on('sort-direction', ({ sortDirection }) => {
 				this.sortDirection = sortDirection;
-                this.usersSorted;
+				this.usersSorted;
 			});
 			eventBus.$on('search-text', ({ searchText }) => {
 				this.searchText = searchText;
@@ -62,20 +56,16 @@
 		},
 		async mounted() {
 			try {
-                this.isLoading = true;
-
-				const { data } = await axios.get('https://randomuser.me/api/?results=6');
-
-				this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
-
-
+				if (process.env.NODE_ENV == 'test') {
+					this.users = mockUsers.sort((a, b) => a.name.first.localeCompare(b.name.first));
+				} else {
+					const { data } = await axios.get('https://randomuser.me/api/?results=6');
+					this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
+				}
 			} catch (error) {
-                this.isLoading = false;
 				this.errorText = 'Could not load users. <br /> Try reloading again!';
-				throw error;
-			} finally {
-                this.isLoading = false;
-            }
+				console.log(error);
+			}
 		},
 		computed: {
 			usersFiltered() {
@@ -96,8 +86,6 @@
 	@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Lato:wght@400;700&family=Work+Sans:wght@400;700&display=swap');
 
 	$ff-primary: 'Work Sans', sans-serif;
-	$ff-secondary: 'Karla', sans-serif;
-	$ff-tertiary: 'Lato', sans-serif;
 
 	$bg-clr: #ebe9e4;
 
@@ -109,10 +97,13 @@
 
 	body {
 		background: $bg-clr;
-        
-        a:link, :visited, :hover, :active {
-            color: #000;
-        }
+
+		a:link,
+		:visited,
+		:hover,
+		:active {
+			color: #000;
+		}
 	}
 
 	.wrapper {

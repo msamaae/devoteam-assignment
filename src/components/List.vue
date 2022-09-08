@@ -13,11 +13,11 @@
 			</div>
 			<div class="list-item__contact">
 				<div>
-					<a :href="email" aria-label="email" target="_blank" rel="noopener">
-						<font-awesome-icon icon="envelope" />
+					<a :href="'mailto:' + email" aria-label="email" target="_blank" rel="noopener">
+						<FontAwesomeIcon icon="envelope" />
 					</a>
-					<a :href="phone" aria-label="phone" target="_blank" rel="noopener">
-						<font-awesome-icon icon="phone" />
+					<a :href="'tel:+' + phone" aria-label="phone" target="_blank" rel="noopener">
+						<FontAwesomeIcon icon="phone" />
 					</a>
 				</div>
 			</div>
@@ -26,8 +26,11 @@
 </template>
 
 <script>
+	import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 	export default {
 		name: 'List',
+        components: { FontAwesomeIcon }, 
 		props: {
 			users: {
 				type: Array,

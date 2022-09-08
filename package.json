@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "NODE_ENV=test vue-cli-service test:unit "
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

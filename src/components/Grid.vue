@@ -12,10 +12,10 @@
 				<div class="grid-item__country">{{ location.country }}</div>
 				<div class="grid-item__contact">
 					<a :href="'mailto:' + email" aria-label="email" target="_blank" rel="noopener">
-						<font-awesome-icon icon="envelope" />
+						<FontAwesomeIcon icon="fa-solid fa-envelope" />
 					</a>
 					<a :href="'tel:+' + phone" aria-label="phone" target="_blank" rel="noopener">
-						<font-awesome-icon icon="phone" />
+						<FontAwesomeIcon icon="fa-solid fa-phone" />
 					</a>
 				</div>
 			</div>
@@ -24,8 +24,11 @@
 </template>
 
 <script>
+	import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 	export default {
 		name: 'Grid',
+        components: { FontAwesomeIcon },
 		props: {
 			users: {
 				type: Array,

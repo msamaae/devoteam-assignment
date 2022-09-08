@@ -23,20 +23,16 @@ describe('Header.vue', () => {
 		wrapper.vm.$emit('sort-direction', sortDirection);
 		wrapper.vm.$emit('toggle-view', toggleView);
 
-		// Wait until $emits have been handled
 		await wrapper.vm.$nextTick();
 
-		// Assert event has been emitted
 		expect(wrapper.emitted('search-text')).toBeTruthy();
 		expect(wrapper.emitted('sort-direction')).toBeTruthy();
 		expect(wrapper.emitted('toggle-view')).toBeTruthy();
 
-		// Assert event count
 		expect(wrapper.emitted('search-text').length).toBe(1);
 		expect(wrapper.emitted('sort-direction').length).toBe(1);
 		expect(wrapper.emitted('toggle-view').length).toBe(1);
 
-		// Assert event payload
 		expect(wrapper.emitted('search-text')[0]).toEqual([searchText]);
 		expect(wrapper.emitted('sort-direction')[0]).toEqual([sortDirection]);
 		expect(wrapper.emitted('toggle-view')[0]).toEqual([toggleView]);
