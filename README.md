@@ -2,7 +2,7 @@
 
 ## Short description
 
-Recreated a Figma design that display responsive image cards where we can switch between grid/list view. We can sort the cards by name (asc/desc) and search by name aswell. Added also some unit testing for the components that are used.
+Recreated a Figma design that display responsive image cards where we can switch between grid/list view. We can sort the cards by name (asc/desc) and search by name aswell. Added unit tests for the components that are used.
 
 ## Project setup
 

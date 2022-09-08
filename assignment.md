@@ -9,19 +9,19 @@ https://www.figma.com/file/YFz4WAqi9ebuvCPESpIP2q/Frontend-Assignment
 
 ### Feature and functional requirements:
 
--   [] Recreate the Figma design.
+-   [x] Recreate the Figma design.
 -   [x] Enable switch between grid and list view.
 -   [x] Add sorting by name (ascending and descending) functionality.
 -   [x] Add search by name functionality.
 -   [x] Handle empty or error states.
 -   [x] Responsive design.
 -   [x] No UI frameworks used (ex. Bootstrap, Material, Tailwind).
--   [] Unit testing for some major functionality (coverage within reason).
+-   [x] Unit testing for some major functionality (coverage within reason).
 
 ### Bonus Points
 
 -   [] Use lazy loading of the cards to load a few cards at a time.
--   [] Maximise accessibility through HTML and WAI-ARIA to the best of your ability.
+-   [x] Maximise accessibility through HTML and WAI-ARIA to the best of your ability.
 
 ### Delivery details
 

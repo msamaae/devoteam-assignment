@@ -6,6 +6,10 @@
 			<h2 v-html="errorText"></h2>
 		</div>
 
+        <div v-if="isLoading" class="error-text">
+            <h2>Loading users...</h2>
+        </div>
+
 		<div>
 			<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
 			<List :users="usersFiltered" v-else />
@@ -32,6 +36,7 @@
 			return {
 				users: [],
 				errorText: '',
+                isLoading: false,
 				searchText: '',
 				sortDirection: 'desc',
 				toggleView: 'grid',
@@ -59,13 +64,18 @@
 				if (process.env.NODE_ENV == 'test') {
 					this.users = mockUsers.sort((a, b) => a.name.first.localeCompare(b.name.first));
 				} else {
+                    this.isLoading = true;
+
 					const { data } = await axios.get('https://randomuser.me/api/?results=6');
 					this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
 				}
 			} catch (error) {
+                this.isLoading = false;
 				this.errorText = 'Could not load users. <br /> Try reloading again!';
 				console.log(error);
-			}
+			} finally {
+                this.isLoading = false;
+            }
 		},
 		computed: {
 			usersFiltered() {
