@@ -37,7 +37,7 @@ describe('App.vue', () => {
 
 	it('filters users based on search input', () => {
 		const wrapper = shallowMount(App);
-		const searchText = 'Eira';
+		const searchText = 'Afet';
 
 		wrapper.setData({ searchText: searchText });
 
@@ -50,7 +50,7 @@ describe('App.vue', () => {
 
 		wrapper.setData({ sortDirection: sortDirection });
 
-		expect(wrapper.vm.usersSorted[0].name.first).toBe('Eira');
+		expect(wrapper.vm.usersSorted[0].name.first).toBe('Afet');
 	});
 
 	it('sorts users first name in ascending order', () => {
@@ -59,7 +59,7 @@ describe('App.vue', () => {
 
 		wrapper.setData({ sortDirection: sortDirection });
 
-		expect(wrapper.vm.usersSorted[0].name.first).toBe('Ved');
+		expect(wrapper.vm.usersSorted[0].name.first).toBe('میلاد');
 	});
 
 	it('displays an error text if there is one', async () => {

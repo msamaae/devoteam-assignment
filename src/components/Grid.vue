@@ -1,8 +1,13 @@
 <template>
 	<div class="grid-wrapper">
-		<div class="grid-item" v-for="({ name, picture, location, email, phone }, key) in users" :key="key">
-			<div class="rect"></div>
-			<div class="section top">
+		<div
+			class="grid-item"
+			v-for="({ name, picture, location, email, phone, bgColor }, key) in users"
+			:key="key"
+			ref="grid-item"
+		>
+			<div class="rect" :style="{ 'background': bgColor }"></div>
+			<div class="section top" :style="{ 'background': bgColor }">
 				<div class="grid-item__name">{{ name.first }} {{ name.last }}</div>
 				<div class="grid-item__img">
 					<img :src="picture.medium" alt="User image" />
@@ -28,7 +33,7 @@
 
 	export default {
 		name: 'Grid',
-        components: { FontAwesomeIcon },
+		components: { FontAwesomeIcon },
 		props: {
 			users: {
 				type: Array,
@@ -58,7 +63,6 @@
 			box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 20%);
 
 			& .rect {
-				background-color: #a7b8a8;
 				position: absolute;
 				width: 50px;
 				height: 50px;
@@ -76,7 +80,6 @@
 				min-height: 50%;
 
 				&.top {
-					background: #a7b8a8;
 					border-bottom-right-radius: 2.5rem;
 				}
 
@@ -140,50 +143,18 @@
 
 			&:nth-child(2) {
 				grid-area: two;
-
-				& .rect {
-					background-color: #e1d3c7;
-				}
-
-				& .top {
-					background: #e1d3c7;
-				}
 			}
 
 			&:nth-child(3) {
 				grid-area: three;
-
-				& .rect {
-					background-color: #e8cdad;
-				}
-
-				& .top {
-					background: #e8cdad;
-				}
 			}
 
 			&:nth-child(4) {
 				grid-area: four;
-
-				& .rect {
-					background-color: #e1d3c7;
-				}
-
-				& .top {
-					background: #e1d3c7;
-				}
 			}
 
 			&:nth-child(5) {
 				grid-area: five;
-
-				& .rect {
-					background-color: #e8cdad;
-				}
-
-				& .top {
-					background: #e8cdad;
-				}
 			}
 
 			&:nth-child(6) {

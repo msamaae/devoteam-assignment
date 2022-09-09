@@ -6,9 +6,9 @@
 			<h2 v-html="errorText"></h2>
 		</div>
 
-        <div v-if="isLoading" class="error-text">
-            <h2>Loading users...</h2>
-        </div>
+		<div v-if="isLoading" class="error-text">
+			<h2>Loading users...</h2>
+		</div>
 
 		<div>
 			<Grid :users="usersFiltered" v-if="toggleView === 'grid'" />
@@ -36,10 +36,11 @@
 			return {
 				users: [],
 				errorText: '',
-                isLoading: false,
+				isLoading: false,
 				searchText: '',
 				sortDirection: 'desc',
 				toggleView: 'grid',
+				bgColors: ['#a7b8a8', '#e1d3c7', '#e8cdad', '#e1d3c7', '#e8cdad', '#a7b8a8'],
 			};
 		},
 		created() {
@@ -64,18 +65,27 @@
 				if (process.env.NODE_ENV == 'test') {
 					this.users = mockUsers.sort((a, b) => a.name.first.localeCompare(b.name.first));
 				} else {
-                    this.isLoading = true;
+					this.isLoading = true;
 
-					const { data } = await axios.get('https://randomuser.me/api/?results=6');
-					this.users = data.results.sort((a, b) => a.name.first.localeCompare(b.name.first));
+					const { data } = await axios.get('https://randomuser.me/api/?results=50');
+					const iterator = this.getColor(this.bgColors);
+
+					this.users = data.results
+						.sort((a, b) => a.name.first.localeCompare(b.name.first))
+						.map(user => {
+							user.bgColor = iterator.next().value;
+							return user;
+						});
+
+					console.log(this.users);
 				}
 			} catch (error) {
-                this.isLoading = false;
+				this.isLoading = false;
 				this.errorText = 'Could not load users. <br /> Try reloading again!';
 				console.log(error);
 			} finally {
-                this.isLoading = false;
-            }
+				this.isLoading = false;
+			}
 		},
 		computed: {
 			usersFiltered() {
@@ -86,6 +96,15 @@
 					return this.users.sort((a, b) => a.name.first.localeCompare(b.name.first));
 				} else {
 					return this.users.sort((a, b) => b.name.first.localeCompare(a.name.first));
+				}
+			},
+		},
+		methods: {
+			*getColor(colors) {
+				let i = 0;
+				while (true) {
+					yield colors[i];
+					i = (i + 1) % colors.length;
 				}
 			},
 		},
@@ -157,9 +176,6 @@
 				order: -1;
 			}
 		}
-
-		/* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 10%) */
-		/* box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 55%); */
 
 		.grid-wrapper {
 			grid-gap: 2.5rem;

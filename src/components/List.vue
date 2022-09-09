@@ -1,6 +1,11 @@
 <template>
 	<div class="list-wrapper">
-		<div class="list-item" v-for="({ name, picture, location, email, phone }, key) in users" :key="key">
+		<div
+			class="list-item"
+			v-for="({ name, picture, location, email, phone, bgColor }, key) in users"
+			:key="key"
+			:style="{ background: bgColor }"
+		>
 			<div class="list-item__curve"></div>
 			<div class="list-item__content">
 				<div class="list-item__img">
@@ -30,7 +35,7 @@
 
 	export default {
 		name: 'List',
-        components: { FontAwesomeIcon }, 
+		components: { FontAwesomeIcon },
 		props: {
 			users: {
 				type: Array,
@@ -48,7 +53,6 @@
 		gap: 1rem;
 
 		& .list-item {
-			background-color: #a7b8a8;
 			display: flex;
 			border-radius: 1.25rem;
 			padding: 0.5rem 1.25rem;
@@ -56,7 +60,6 @@
 			z-index: 0;
 			overflow: hidden;
 			box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 20%);
-
 
 			&__curve {
 				position: absolute;
@@ -119,22 +122,6 @@
 					font-size: 1.275rem;
 					margin-right: 0.625rem;
 				}
-			}
-
-			&:nth-child(2) {
-				background: #e1d3c7;
-			}
-
-			&:nth-child(3) {
-				background: #e8cdad;
-			}
-
-			&:nth-child(4) {
-				background: #e1d3c7;
-			}
-
-			&:nth-child(5) {
-				background: #e8cdad;
 			}
 		}
 	}
