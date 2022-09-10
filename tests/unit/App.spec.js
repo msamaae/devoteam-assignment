@@ -3,24 +3,42 @@ import App from '@/App.vue';
 import Grid from '@/components/Grid.vue';
 import List from '@/components/List.vue';
 
+import axios from 'axios';
+import { mockUsers } from '../mocks/mockUsers';
+
+jest.spyOn(axios, 'get').mockResolvedValue(mockUsers);
+
 describe('App.vue', () => {
-	it('renders', () => {
-		const wrapper = shallowMount(App);
+	let wrapper;
+
+	beforeAll(() => {
+		wrapper = shallowMount(App);
+		wrapper.setData({ users: mockUsers });
+	});
+
+	test('sanity test', () => {
+		expect(true).toBe(true);
+	});
+
+	it('loads users', () => {
+		expect(axios.get).toHaveBeenCalledTimes(1);
+		expect(axios.get).toHaveBeenCalledWith('https://randomuser.me/api/?results=50');
+		expect(wrapper.vm.users).toHaveLength(50);
+	});
+
+	it('renders', async () => {
 		expect(wrapper.exists()).toBe(true);
 	});
 
 	it('renders grid view as default', () => {
-		const wrapper = shallowMount(App);
 		expect(wrapper.findComponent(Grid).exists()).toBe(true);
 	});
 
 	it('does not render list view as default', () => {
-		const wrapper = shallowMount(App);
 		expect(wrapper.findComponent(List).exists()).toBe(false);
 	});
 
 	it('renders list view when toggled', async () => {
-		const wrapper = shallowMount(App);
 		const toggleView = 'list';
 
 		await wrapper.setData({ toggleView: toggleView });
@@ -28,7 +46,6 @@ describe('App.vue', () => {
 	});
 
 	it('renders grid view when toggled', async () => {
-		const wrapper = shallowMount(App);
 		const toggleView = 'grid';
 
 		await wrapper.setData({ toggleView: toggleView });
@@ -36,34 +53,35 @@ describe('App.vue', () => {
 	});
 
 	it('filters users based on search input', () => {
-		const wrapper = shallowMount(App);
-		const searchText = 'Afet';
+		const name = wrapper.vm.users[0].name.first;
 
-		wrapper.setData({ searchText: searchText });
+		wrapper.setData({ searchText: name });
 
-		expect(wrapper.vm.usersFiltered[0].name.first).toBe(searchText);
+		expect(name).toBe(name);
+		expect(wrapper.vm.usersFiltered).toHaveLength(1);
 	});
 
 	it('sorts users first name in descending order', () => {
-		const wrapper = shallowMount(App);
 		const sortDirection = 'desc';
+		const users = wrapper.vm.users;
+		const usersDesc = users.sort((a, b) => a.name.first.localeCompare(b.name.first));
 
 		wrapper.setData({ sortDirection: sortDirection });
 
-		expect(wrapper.vm.usersSorted[0].name.first).toBe('Afet');
+		expect(users).toBe(usersDesc);
 	});
 
 	it('sorts users first name in ascending order', () => {
-		const wrapper = shallowMount(App);
 		const sortDirection = 'asc';
+		const users = wrapper.vm.users;
+		const usersAsc = users.sort((a, b) => b.name.first.localeCompare(a.name.first));
 
 		wrapper.setData({ sortDirection: sortDirection });
 
-		expect(wrapper.vm.usersSorted[0].name.first).toBe('میلاد');
+		expect(users).toBe(usersAsc);
 	});
 
 	it('displays an error text if there is one', async () => {
-		const wrapper = shallowMount(App);
 		const errorText = 'Could not load users. Try reloading again!';
 
 		await wrapper.setData({ errorText: errorText });

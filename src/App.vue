@@ -20,7 +20,6 @@
 <script>
 	import axios from 'axios';
 	import { eventBus } from '@/eventBus';
-	import { mockUsers } from '../tests/mocks/mockUsers';
 	import Header from '@/components/Header.vue';
 	import Grid from '@/components/Grid.vue';
 	import List from '@/components/List.vue';
@@ -62,27 +61,20 @@
 		},
 		async mounted() {
 			try {
-				if (process.env.NODE_ENV == 'test') {
-					this.users = mockUsers.sort((a, b) => a.name.first.localeCompare(b.name.first));
-				} else {
-					this.isLoading = true;
+				this.isLoading = true;
 
-					const { data } = await axios.get('https://randomuser.me/api/?results=50');
-					const iterator = this.getColor(this.bgColors);
+				const { data } = await axios.get('https://randomuser.me/api/?results=50');
+				const iterator = this.getColor(this.bgColors);
 
-					this.users = data.results
-						.sort((a, b) => a.name.first.localeCompare(b.name.first))
-						.map(user => {
-							user.bgColor = iterator.next().value;
-							return user;
-						});
-
-					console.log(this.users);
-				}
-			} catch (error) {
+				this.users = data.results
+					.sort((a, b) => a.name.first.localeCompare(b.name.first))
+					.map(user => {
+						user.bgColor = iterator.next().value;
+						return user;
+					});
+			} catch (err) {
 				this.isLoading = false;
 				this.errorText = 'Could not load users. <br /> Try reloading again!';
-				console.log(error);
 			} finally {
 				this.isLoading = false;
 			}
